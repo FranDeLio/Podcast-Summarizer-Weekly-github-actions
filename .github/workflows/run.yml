@@ -24,7 +24,7 @@ jobs:
           
       - name: execute main.py
         env:
-          SOME_SECRET: ${{ secrets.SOME_SECRET }}
+          SOME_SECRET: ${{ secrets.ASSEMBLYAI_API_KEY }}
         run: python main.py
           
       - name: commit files
