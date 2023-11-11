@@ -34,4 +34,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git push -f
+          git commit -m "Adding new episode transcripts."
+          git push
