@@ -1,7 +1,8 @@
-name: ffonly
+name: Download and transcribe podcasts
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: 15 10 * * 0
 
 jobs:
   build:
@@ -32,5 +33,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add transcripts
           git commit --allow-empty -m "Adding new episode transcripts."
-          git pull --ff-only
+          git pull --rebase
           git push
