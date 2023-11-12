@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 import time
 import dateutil.parser
 import os
@@ -8,9 +8,9 @@ from datetime import datetime
 import re
 from os import listdir
 from os.path import isfile, join
-#from dotenv import load_dotenv ; load_dotenv()
+from dotenv import load_dotenv ; load_dotenv()
 
-def get_episode_date(episode):
+def get_episode_date(episode: Tag) -> datetime.date:
 
     date_text=episode.find('pubDate').text
     parsed_date=dateutil.parser.parse(date_text).strftime('%d-%m-%Y')
@@ -18,14 +18,14 @@ def get_episode_date(episode):
 
     return parsed_date
 
-def get_simplified_episode_title(episode):
+def get_simplified_episode_title(episode: Tag) -> str:
 
     title = episode.find('title').text
     simplified_title = re.sub(r'[%/&!@#–\*\$\?\+\^\\.\\\\]', '', title).replace("Episode","")
 
     return simplified_title
 
-def download_transcribed_episode(episode, transcripts_path):
+def download_transcribed_episode(episode: Tag, transcripts_path: str) -> None:
 
     title = get_simplified_episode_title(episode)
     transcript_path = f"{transcripts_path}/{title}.txt"
@@ -45,7 +45,7 @@ def download_transcribed_episode(episode, transcripts_path):
     else:
         time.sleep(3)
 
-def list_all_downloaded_episodes(mypath):
+def list_all_downloaded_episodes(mypath: str) -> list[str]:
 
     onlyfiles = [f.replace(".txt", "") for f in listdir(mypath) if isfile(join(mypath, f))]
 
@@ -70,10 +70,11 @@ if __name__ == '__main__':
         podcast_episodes = soup.find_all('item')
 
         for episode in podcast_episodes:
+            print(type(episode))
             if get_episode_date(episode)>start_date and get_simplified_episode_title(episode) not in downloaded_episodes:
                 
                 print(get_simplified_episode_title(episode))
-                download_transcribed_episode(episode, transcripts_path)
+                #download_transcribed_episode(episode, transcripts_path)
 
             
 
