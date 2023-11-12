@@ -36,4 +36,4 @@ jobs:
           git add -A
           git commit -m "Adding new episode transcripts."
           git pull
-          git push
+          git push origin main
