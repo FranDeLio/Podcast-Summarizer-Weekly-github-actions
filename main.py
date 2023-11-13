@@ -87,7 +87,7 @@ if __name__ == "__main__":
     }
 
 
-    start_date = datetime.strptime("10-10-2023", "%d-%m-%Y").date()
+    start_date = datetime.strptime("10-11-2023", "%d-%m-%Y").date()
     max_token_length = 15_500
 
     for podcast, rss_feed_url in podcasts_list.items():
