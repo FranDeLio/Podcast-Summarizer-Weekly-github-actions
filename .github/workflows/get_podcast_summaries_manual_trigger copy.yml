@@ -1,8 +1,7 @@
-name: Download and transcribe podcasts
+name: Get Podcast Summaries. Manual Trigger.
 
 on:
-  schedule:
-    - cron: 15 10 * * 0
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,13 +24,14 @@ jobs:
       - name: execute main.py
         env:
           ASSEMBLYAI_API_KEY: ${{ secrets.ASSEMBLYAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python main.py
           
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add transcripts
+          git add podcast_episode_summaries
           git commit --allow-empty -m "Adding new episode transcripts."
           git pull --rebase
           git push
