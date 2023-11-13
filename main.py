@@ -79,6 +79,7 @@ def summarize_transcription(transcription: str) -> None:
 
     return output
 
+
 def main() -> None:
     for podcast, rss_feed_url in PODCASTS_DICT.items():
         summaries_path = f"./podcast_episode_summaries/{podcast}"
