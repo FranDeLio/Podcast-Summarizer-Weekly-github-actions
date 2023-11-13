@@ -11,6 +11,7 @@ from openai import OpenAI
 import tiktoken
 from dotenv import load_dotenv; load_dotenv()
 import traceback
+from config import PODCASTS_DICT, START_DATE, GPT_MODEL, TEMPERATURE, MAX_TOKEN_LENGTH, MAX_STRING_LENGTH
 
 
 def list_all_downloaded_episodes(mypath: str) -> list[str]:
@@ -63,7 +64,7 @@ def summarize_transcription(transcription: str) -> None:
 
     system_txt = "You are an assistant, who identifies the key points within podcast transcripts and explains them in detail."
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo-1106",
+        model=GPT_MODEL,
         messages=[
             {"role": "system", "content": system_txt},
             {
@@ -71,7 +72,7 @@ def summarize_transcription(transcription: str) -> None:
                 "content": f"Summarize the following text: {transcription}",
             },
         ],
-        temperature=0,
+        temperature=TEMPERATURE,
     )
 
     output = completion.choices[0].message.content
@@ -80,17 +81,8 @@ def summarize_transcription(transcription: str) -> None:
 
 
 if __name__ == "__main__":
-    podcasts_list = {
-        "PhilosophizeThis": "https://philosophizethis.libsyn.com/rss",
-        "EconTalk": "https://feeds.simplecast.com/wgl4xEgL"
-        #"LexFridman": "https://lexfridman.com/feed/podcast/"",
-    }
 
-
-    start_date = datetime.strptime("10-11-2023", "%d-%m-%Y").date()
-    max_token_length = 15_500
-
-    for podcast, rss_feed_url in podcasts_list.items():
+    for podcast, rss_feed_url in PODCASTS_DICT.items():
         summaries_path = f"./podcast_episode_summaries/{podcast}"
         os.makedirs(summaries_path, exist_ok=True)
         downloaded_episodes = list_all_downloaded_episodes(summaries_path)
@@ -102,7 +94,7 @@ if __name__ == "__main__":
         for episode in podcast_episodes:
             title = get_simplified_episode_title(episode)
             if (
-                get_episode_date(episode) > start_date
+                get_episode_date(episode) > START_DATE
                 and title not in downloaded_episodes
             ):
                 print(title)
@@ -113,8 +105,8 @@ if __name__ == "__main__":
                 if transcription == "transcription_error":
                     continue
 
-                if num_tokens_from_string(transcription) > max_token_length:
-                    transcription = transcription[0:70000]
+                if num_tokens_from_string(transcription) > MAX_TOKEN_LENGTH:
+                    transcription = transcription[0:MAX_STRING_LENGTH]
 
                 try:
                     summary = summarize_transcription(transcription)
