@@ -1,0 +1,5 @@
+In this episode, the host, Russ Roberts, interviews author Michael Easter about his new book, "The Scarcity Brain." The book explores the concept of the scarcity brain, which refers to the feeling of not having enough and the struggle to moderate behaviors. Michael explains that the book investigates the roots of the scarcity brain and how modern technology has contributed to pushing individuals into excessive behaviors. He discusses the impact of the scarcity brain on various aspects of life, such as gambling, social media, and consumption of material goods.
+
+Michael shares insights from his experiences, including spending time in a monastery and interacting with Benedictine monks to understand their happiness despite their rigorous lifestyle. He also discusses the impact of slowing down and savoring experiences, such as mindful eating, as a way to counteract the scarcity brain.
+
+Overall, the episode delves into the challenges of modern life and the pursuit of happiness, offering perspectives on how to navigate the scarcity brain and find contentment in a fast-paced world.
