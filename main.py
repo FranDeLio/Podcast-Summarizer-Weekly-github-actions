@@ -47,7 +47,6 @@ def num_tokens_from_string(string: str, encoding_name: str = "cl100k_base") -> i
 
 def download_transcribed_episode(episode: Tag) -> str:
     mp3_url = episode.find("enclosure")["url"]
-
     aai.settings.api_key = os.environ["ASSEMBLYAI_API_KEY"]
     transcriber = aai.Transcriber()
 
