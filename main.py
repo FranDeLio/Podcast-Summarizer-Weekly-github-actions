@@ -1,16 +1,17 @@
 import requests
-from bs4 import BeautifulSoup, Tag
-import dateutil.parser
-import os
-import assemblyai as aai
-from datetime import datetime
-import re
-from os import listdir
-from os.path import isfile, join
-from openai import OpenAI
-import tiktoken
-from dotenv import load_dotenv; load_dotenv()
 import traceback
+import re
+import dateutil.parser
+from datetime import datetime
+import tiktoken
+from bs4 import BeautifulSoup, Tag
+import assemblyai as aai
+from openai import OpenAI
+from dotenv import load_dotenv; load_dotenv()
+
+from os import listdir, makedirs
+from os.path import isfile, join
+
 from config import PODCASTS_DICT, START_DATE, GPT_MODEL, TEMPERATURE, MAX_TOKEN_LENGTH, MAX_STRING_LENGTH
 
 
@@ -78,12 +79,10 @@ def summarize_transcription(transcription: str) -> None:
 
     return output
 
-
-if __name__ == "__main__":
-
+def main() -> None:
     for podcast, rss_feed_url in PODCASTS_DICT.items():
         summaries_path = f"./podcast_episode_summaries/{podcast}"
-        os.makedirs(summaries_path, exist_ok=True)
+        makedirs(summaries_path, exist_ok=True)
         downloaded_episodes = list_all_downloaded_episodes(summaries_path)
 
         page = requests.get(rss_feed_url)
@@ -114,3 +113,9 @@ if __name__ == "__main__":
 
                 with open(summary_path, "w+") as f:
                     f.write(summary)
+
+
+if __name__ == "__main__":
+    main()
+
+   
