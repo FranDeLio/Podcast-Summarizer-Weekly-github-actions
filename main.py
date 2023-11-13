@@ -91,14 +91,12 @@ if __name__ == "__main__":
     max_token_length = 15_500
 
     for podcast, rss_feed_url in podcasts_list.items():
+        summaries_path = f"./podcast_episode_summaries/{podcast}"
+        os.makedirs(summaries_path, exist_ok=True)
+        downloaded_episodes = list_all_downloaded_episodes(summaries_path)
+
         page = requests.get(rss_feed_url)
         soup = BeautifulSoup(page.content, "xml")
-        
-        summaries_path = f"./podcast_episode_summaries/{podcast}"
-        
-        os.makedirs(summaries_path, exist_ok=True)
-
-        downloaded_episodes = list_all_downloaded_episodes(summaries_path)
         podcast_episodes = soup.find_all("item")
 
         for episode in podcast_episodes:
