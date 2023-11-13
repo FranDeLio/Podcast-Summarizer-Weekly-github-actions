@@ -28,7 +28,7 @@ def get_simplified_episode_title(episode: Tag) -> str:
 def download_transcribed_episode(episode: Tag, transcripts_path: str) -> None:
 
     title = get_simplified_episode_title(episode)
-    transcript_path = f"{transcripts_path}/{title}.txt"
+    transcript_path = f"{transcripts_path}/{title}.md"
     mp3_url = episode.find('enclosure')['url']
 
     aai.settings.api_key=os.environ['ASSEMBLYAI_API_KEY']
@@ -47,7 +47,7 @@ def download_transcribed_episode(episode: Tag, transcripts_path: str) -> None:
 
 def list_all_downloaded_episodes(mypath: str) -> list[str]:
 
-    onlyfiles = [f.replace(".txt", "") for f in listdir(mypath) if isfile(join(mypath, f))]
+    onlyfiles = [f.replace(".md", "") for f in listdir(mypath) if isfile(join(mypath, f))]
 
     return onlyfiles
 
