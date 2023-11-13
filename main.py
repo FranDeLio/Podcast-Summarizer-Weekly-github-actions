@@ -99,9 +99,8 @@ if __name__ == "__main__":
             ):
                 print(title)
                 summary_path = f"{summaries_path}/{title}.md"
-
                 transcription = download_transcribed_episode(episode)
-
+                
                 if transcription == "transcription_error":
                     continue
 
