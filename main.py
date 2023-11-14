@@ -9,7 +9,7 @@ import assemblyai as aai
 from openai import OpenAI
 from dotenv import load_dotenv; load_dotenv()
 
-from os import listdir, makedirs
+import os
 from os.path import isfile, join
 
 from config import PODCASTS_DICT, START_DATE, GPT_MODEL, TEMPERATURE, MAX_TOKEN_LENGTH, MAX_STRING_LENGTH
@@ -17,7 +17,7 @@ from config import PODCASTS_DICT, START_DATE, GPT_MODEL, TEMPERATURE, MAX_TOKEN_
 
 def list_all_downloaded_episodes(mypath: str) -> list[str]:
     onlyfiles = [
-        f.replace(".md", "") for f in listdir(mypath) if isfile(join(mypath, f))
+        f.replace(".md", "") for f in os.listdir(mypath) if isfile(join(mypath, f))
     ]
 
     return onlyfiles
@@ -83,7 +83,7 @@ def summarize_transcription(transcription: str) -> None:
 def main() -> None:
     for podcast, rss_feed_url in PODCASTS_DICT.items():
         summaries_path = f"./podcast_episode_summaries/{podcast}"
-        makedirs(summaries_path, exist_ok=True)
+        os.makedirs(summaries_path, exist_ok=True)
         downloaded_episodes = list_all_downloaded_episodes(summaries_path)
 
         page = requests.get(rss_feed_url)
