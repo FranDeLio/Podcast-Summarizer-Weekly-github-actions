@@ -56,13 +56,14 @@ def download_transcribed_episode(episode: Tag) -> str:
 
     if transcription_result.status == "completed":
         return transcription_result.text
+    
     return "transcription_error"
 
 
 def summarize_transcription(transcription: str) -> None:
     client = OpenAI()
 
-    system_txt = "You are an assistant, who identifies the key points within podcast transcripts and explains them in detail."
+    system_txt = "You are an assistant, who writes 1000 completion token-long essays essays where you list and explain in detail the key takeaways from podcast transcripts."
     completion = client.chat.completions.create(
         model=GPT_MODEL,
         messages=[
@@ -101,6 +102,7 @@ def main() -> None:
                 transcription = download_transcribed_episode(episode)
                 
                 if transcription == "transcription_error":
+                    print('transcription error.')
                     continue
 
                 if num_tokens_from_string(transcription) > MAX_TOKEN_LENGTH:

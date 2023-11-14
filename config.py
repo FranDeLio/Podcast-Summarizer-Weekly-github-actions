@@ -6,7 +6,7 @@ PODCASTS_DICT = {
     #"LexFridman": "https://lexfridman.com/feed/podcast/"",
 }
 
-START_DATE = datetime.strptime("10-11-2023", "%d-%m-%Y").date()
+START_DATE = datetime.strptime("01-10-2023", "%d-%m-%Y").date()
 
 MAX_TOKEN_LENGTH = 15_500
 MAX_STRING_LENGTH = 70_000
